@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KanjiPractice">
         <activity
+            android:name=".LevelVisualizerActivity"
+            android:exported="false"
+            android:parentActivityName=".LevelActivity"/>
+        <activity
+            android:name=".LevelActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

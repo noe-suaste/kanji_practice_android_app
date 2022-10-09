@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LevelVisualizerActivity">
+
+    <GridView
+        android:id="@+id/gv_kanjisGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:clipChildren="true"
+        android:columnWidth="75dp"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="20dp"
+        android:numColumns="auto_fit"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:scrollbars="none"
+        android:scrollingCache="true"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="25dp"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
