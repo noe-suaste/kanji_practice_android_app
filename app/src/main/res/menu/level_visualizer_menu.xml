@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_play"
+        android:title="Play"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_play"/>
+
+    <item
+        android:id="@+id/action_selectAll"
+        android:title="Select All"
+        app:showAsAction="never"/>
+
+    <!--
+    <item
+        android:id="@+id/action_selectLearned"
+        android:title="Select Learned"
+        app:showAsAction="never"/>
+    -->
+</menu>

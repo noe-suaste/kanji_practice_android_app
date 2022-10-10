@@ -10,9 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KanjiPractice">
         <activity
+            android:name=".KanjiInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlayActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
             android:name=".LevelVisualizerActivity"
             android:exported="false"
-            android:parentActivityName=".LevelActivity"/>
+            android:parentActivityName=".LevelActivity" />
         <activity
             android:name=".LevelActivity"
             android:exported="false"

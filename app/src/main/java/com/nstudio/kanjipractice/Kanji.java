@@ -1,6 +1,8 @@
 package com.nstudio.kanjipractice;
 
-public class Kanji {
+import java.io.Serializable;
+
+public class Kanji implements Serializable {
     private final int id;
     private final String kanji;
     private final String onyomi;
