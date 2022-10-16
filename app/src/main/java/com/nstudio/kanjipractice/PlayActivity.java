@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class PlayActivity extends AppCompatActivity {
     private TextView tv_check;
     private EditText et_answer;
     private Button bt_start;
+    private ImageButton bt_kanjiInfo;
     private Kanji current_kanji;
 
     public PlayActivity() {
@@ -68,6 +70,7 @@ public class PlayActivity extends AppCompatActivity {
         this.tv_check = (TextView) findViewById(R.id.tv_check);
         this.et_answer = (EditText) findViewById(R.id.et_answer);
         this.bt_start = (Button) findViewById(R.id.bt_start);
+        this.bt_kanjiInfo = (ImageButton) findViewById(R.id.bt_kanjiInfo);
 
         this.et_answer.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -101,6 +104,7 @@ public class PlayActivity extends AppCompatActivity {
         this.bt_start.setEnabled(false);
         this.bt_start.setVisibility(View.GONE);
         this.et_answer.setEnabled(true);
+        this.bt_kanjiInfo.setVisibility(View.VISIBLE);
         showNewKanji();
     }
 

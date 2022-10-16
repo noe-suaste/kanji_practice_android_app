@@ -74,6 +74,17 @@ public class LevelVisualizerActivity extends AppCompatActivity {
                 ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
             }
         });
+
+        gv_kanjisGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(self, KanjiInfoActivity.class);
+                intent.putExtra("kanji", kanjis.get(position));
+                startActivity(intent);
+                return true;
+            }
+        });
+
     }
 
     @Override
