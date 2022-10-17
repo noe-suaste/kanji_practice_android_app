@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.nstudio.kanjipractice.database.Kanji;
 
 public class KanjiInfoActivity extends AppCompatActivity {
 
@@ -17,6 +21,7 @@ public class KanjiInfoActivity extends AppCompatActivity {
     private TextView tv_kunyomi;
     private TextView tv_kunyomiHiragana;
     private TextView tv_kanjiJapanese;
+    private Button bt_markAsLearned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class KanjiInfoActivity extends AppCompatActivity {
         this.tv_kunyomi = (TextView) findViewById(R.id.tv_kunyomi);
         this.tv_kunyomiHiragana = (TextView) findViewById(R.id.tv_kunyomiHiragana);
         this.tv_kanjiJapanese = (TextView) findViewById(R.id.tv_kanjiJapanese);
+        this.bt_markAsLearned = (Button) findViewById(R.id.bt_markAsLearned);
 
         this.tv_meaning.setText(kanji.getMeaning());
         this.tv_onyomi.setText(kanji.getOnyomi());
@@ -38,5 +44,9 @@ public class KanjiInfoActivity extends AppCompatActivity {
         this.tv_kunyomi.setText(kanji.getKunyomi());
         this.tv_kunyomiHiragana.setText(kanji.getKunyomi_hiragana());
         this.tv_kanjiJapanese.setText(kanji.getKanji());
+    }
+
+    public void markAsLearned(View v){
+        this.kanji.setLearned(1);
     }
 }

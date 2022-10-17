@@ -18,13 +18,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nstudio.kanjipractice.database.Kanji;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayActivity extends AppCompatActivity {
 
     private Level level;
     private boolean[] selected_kanjis;
-    private ArrayList<Kanji> kanjis;
+    private List<Kanji> kanjis;
     private CtrlKanji ctrlKanji;
     private TextView tv_meaning;
     private TextView tv_onyomi;
@@ -49,7 +52,7 @@ public class PlayActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         this.level = (Level) extras.getSerializable("level");
         this.selected_kanjis = extras.getBooleanArray("selected_kanjis");
-        this.ctrlKanji = new CtrlKanji();
+        this.ctrlKanji = new CtrlKanji(this);
         switch (level){
             case N5:
                 this.kanjis = ctrlKanji.getSelectedN5Kanjis(this.selected_kanjis);

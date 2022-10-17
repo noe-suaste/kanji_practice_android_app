@@ -26,9 +26,9 @@ public class Kanji implements Serializable {
     @NonNull
     private String meaning;
     @NonNull
-    private boolean learned;
+    private int learned;
 
-    public Kanji(int level, int id, @NonNull String kanji, @NonNull String onyomi, @NonNull String onyomi_katakana, @NonNull String kunyomi, @NonNull String kunyomi_hiragana, @NonNull String meaning, boolean learned) {
+    public Kanji(int level, int id, @NonNull String kanji, @NonNull String onyomi, @NonNull String onyomi_katakana, @NonNull String kunyomi, @NonNull String kunyomi_hiragana, @NonNull String meaning, int learned) {
         this.level = level;
         this.id = id;
         this.kanji = kanji;
@@ -111,11 +111,11 @@ public class Kanji implements Serializable {
     }
 
     @NonNull
-    public boolean getLearned() {
+    public int getLearned() {
         return learned;
     }
 
-    public void setLearned(boolean learned) {
+    public void setLearned(int learned) {
         this.learned = learned;
     }
 }

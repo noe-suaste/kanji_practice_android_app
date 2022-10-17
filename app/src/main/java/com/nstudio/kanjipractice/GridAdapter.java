@@ -10,17 +10,20 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.nstudio.kanjipractice.database.Kanji;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class GridAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Kanji> kanjis;
+    private List<Kanji> kanjis;
     private boolean[] selected_kanjis;
     private LayoutInflater inflater;
 
-    public GridAdapter(Context context, ArrayList<Kanji> kanjis, boolean[] selected_kanjis) {
+    public GridAdapter(Context context, List<Kanji> kanjis, boolean[] selected_kanjis) {
         this.context = context;
         this.kanjis = kanjis;
         this.selected_kanjis = selected_kanjis;
@@ -62,7 +65,7 @@ public class GridAdapter extends BaseAdapter {
         tv_kanji.setText(kanjis.get(position).getKanji());
         tv_id.setText(String.format(Locale.getDefault(),"%d", kanjis.get(position).getId()));
         tv_learned.setText("");
-        if(kanjis.get(position).getLearned()){
+        if(kanjis.get(position).getLearned() == 1){
             tv_learned.setText("✔");
         }
 

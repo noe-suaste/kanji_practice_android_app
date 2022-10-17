@@ -2,6 +2,7 @@ package com.nstudio.kanjipractice;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +17,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+
+import com.nstudio.kanjipractice.database.Kanji;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class LevelVisualizerActivity extends AppCompatActivity {
 
     private Level level;
-    private ArrayList<Kanji> kanjis;
+    private List<Kanji> kanjis;
     private CtrlKanji ctrlKanji;
     private GridView gv_kanjisGrid;
     private GridAdapter gridAdapter;
@@ -35,9 +41,8 @@ public class LevelVisualizerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level_visualizer);
 
         Intent intent = getIntent();
-
         this.level = (Level) intent.getSerializableExtra("level");
-        this.ctrlKanji = new CtrlKanji();
+        this.ctrlKanji = new CtrlKanji(this);
 
         switch (this.level){
             case N5:
@@ -54,10 +59,7 @@ public class LevelVisualizerActivity extends AppCompatActivity {
         this.selected_kanjis = new boolean[kanjis.size()];
 
 
-
-        for(int i = 0; i < selected_kanjis.length; i++){
-            selected_kanjis[i] = false;
-        }
+        Arrays.fill(selected_kanjis, false);
 
         gridAdapter = new GridAdapter(LevelVisualizerActivity.this, kanjis, selected_kanjis);
         gv_kanjisGrid.setAdapter(gridAdapter);
