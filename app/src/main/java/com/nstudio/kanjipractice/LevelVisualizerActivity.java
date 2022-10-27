@@ -2,6 +2,7 @@ package com.nstudio.kanjipractice;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,61 +17,48 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+
+import com.nstudio.kanjipractice.database.Kanji;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class LevelVisualizerActivity extends AppCompatActivity {
 
     private Level level;
-    private ArrayList<Kanji> kanjis;
+    private List<Kanji> kanjis;
     private CtrlKanji ctrlKanji;
     private GridView gv_kanjisGrid;
     private GridAdapter gridAdapter;
     private Context self = this;
-    private boolean[] selected_kanjis;
+    private List<Integer> selected_kanjis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_visualizer);
 
+
         Intent intent = getIntent();
-
         this.level = (Level) intent.getSerializableExtra("level");
-        this.ctrlKanji = new CtrlKanji();
-
-        switch (this.level){
-            case N5:
-                this.kanjis = ctrlKanji.getN5Kanjis();
-                this.setTitle("N5 Kanji");
-                break;
-            case N4:
-                this.kanjis = ctrlKanji.getN4Kanjis();
-                this.setTitle("N4 Kanji");
-            default:
-                break;
-        }
+        this.setTitle(level + " Kanji");
+        this.ctrlKanji = new CtrlKanji(this, level);
+        this.kanjis = this.ctrlKanji.getKanjis();
+        this.selected_kanjis = new ArrayList<Integer>();
         this.gv_kanjisGrid = (GridView) findViewById(R.id.gv_kanjisGrid);
-        this.selected_kanjis = new boolean[kanjis.size()];
-
-
-
-        for(int i = 0; i < selected_kanjis.length; i++){
-            selected_kanjis[i] = false;
-        }
-
         gridAdapter = new GridAdapter(LevelVisualizerActivity.this, kanjis, selected_kanjis);
         gv_kanjisGrid.setAdapter(gridAdapter);
 
         gv_kanjisGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(selected_kanjis[position])
-                    selected_kanjis[position] = false;
+                if(selected_kanjis.contains(position + 1))
+                    selected_kanjis.remove(Integer.valueOf(position + 1));
                 else
-                    selected_kanjis[position] = true;
-
+                    selected_kanjis.add(position + 1);
                 ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
             }
         });
@@ -84,7 +72,6 @@ public class LevelVisualizerActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     @Override
@@ -97,30 +84,63 @@ public class LevelVisualizerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         switch (item.getItemId()){
             case R.id.action_play:
-                boolean atLeastOneKanjiSelected = false;
-                for(int i = 0; i < selected_kanjis.length; i++){
-                    if(selected_kanjis[i])
-                        atLeastOneKanjiSelected = true;
-                }
-                if(atLeastOneKanjiSelected){
+                if(!selected_kanjis.isEmpty()){
                     Intent intent = new Intent(this, PlayActivity.class);
                     Bundle extras = new Bundle();
                     extras.putSerializable("level", this.level);
-                    extras.putBooleanArray("selected_kanjis", selected_kanjis);
+                    extras.putIntegerArrayList("selected_kanjis", (ArrayList<Integer>) selected_kanjis);
                     intent.putExtras(extras);
                     startActivity(intent);
                 }else{
                     Toast.makeText(self, "Please select at least one kanji to study", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.action_setAsLearned:
+                if(!selected_kanjis.isEmpty()){
+                    for(Integer i : selected_kanjis){
+                        this.ctrlKanji.setLearned(1, i);
+                    }
+                    this.kanjis = this.ctrlKanji.getKanjis();
+                }else{
+                    Toast.makeText(self, "Please select at least one kanji to mark as learned", Toast.LENGTH_SHORT).show();
+                }
+                ((GridAdapter) gv_kanjisGrid.getAdapter()).refresh(this.kanjis);
+                break;
             case R.id.action_selectAll:
-                for(int i = 0; i < selected_kanjis.length; i++)
-                    selected_kanjis[i] = true;
+                selected_kanjis.clear();
+                for(int i = 1; i <= kanjis.size(); i++)
+                    selected_kanjis.add(i);
                 ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
                 break;
+            case R.id.action_unselectAll:
+                selected_kanjis.clear();
+                ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
+                break;
+            case R.id.action_selectLearned:
+                selected_kanjis.clear();
+                for(Kanji k : this.kanjis){
+                    if(k.getLearned() == 1)
+                        selected_kanjis.add(k.getId());
+                }
+                ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
+                break;
+            case R.id.action_selectNotLearned:
+                selected_kanjis.clear();
+                for(Kanji k : this.kanjis){
+                    if(k.getLearned() == 0)
+                        selected_kanjis.add(k.getId());
+                }
+                ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        this.kanjis = this.ctrlKanji.getKanjis();
+        ((GridAdapter) gv_kanjisGrid.getAdapter()).refresh(this.kanjis);
     }
 }

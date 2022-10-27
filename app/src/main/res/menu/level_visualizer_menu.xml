@@ -9,8 +9,29 @@
         android:icon="@drawable/ic_play"/>
 
     <item
+        android:id="@+id/action_setAsLearned"
+        android:title="Set As Learned"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_set_as_learned"/>
+
+    <item
         android:id="@+id/action_selectAll"
         android:title="Select All"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_unselectAll"
+        android:title="Unselect All"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_selectLearned"
+        android:title="Select Learned"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_selectNotLearned"
+        android:title="Select Not Learned"
         app:showAsAction="never"/>
 
     <!--

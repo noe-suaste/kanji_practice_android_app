@@ -2,5 +2,7 @@ package com.nstudio.kanjipractice;
 
 public enum Level {
     N5,
-    N4
+    N4,
+    N3,
+    LEARNED;
 }
