@@ -12,6 +12,7 @@ public class LevelActivity extends AppCompatActivity {
 
     private Button bt_levelN5;
     private Button bt_levelN4;
+    private Button bt_levelN3;
 
     @Override
 
@@ -21,6 +22,7 @@ public class LevelActivity extends AppCompatActivity {
 
         this.bt_levelN5 = (Button) findViewById(R.id.bt_levelN5);
         this.bt_levelN4 = (Button) findViewById(R.id.bt_levelN4);
+        this.bt_levelN3 = (Button) findViewById(R.id.bt_levelN3);
     }
 
     public void launchLevelVisualizerActivity(View v){
@@ -31,6 +33,9 @@ public class LevelActivity extends AppCompatActivity {
                 break;
             case R.id.bt_levelN4:
                 level = Level.N4;
+                break;
+            case R.id.bt_levelN3:
+                level = Level.N3;
                 break;
             default:
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();

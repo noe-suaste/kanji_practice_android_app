@@ -26,7 +26,7 @@ import java.util.List;
 public class PlayActivity extends AppCompatActivity {
 
     private Level level;
-    private boolean[] selected_kanjis;
+    private List<Integer> selected_kanjis;
     private List<Kanji> kanjis;
     private CtrlKanji ctrlKanji;
     private TextView tv_meaning;
@@ -39,6 +39,7 @@ public class PlayActivity extends AppCompatActivity {
     private Button bt_start;
     private ImageButton bt_kanjiInfo;
     private Kanji current_kanji;
+    private int current_kanji_index;
 
     public PlayActivity() {
     }
@@ -51,20 +52,9 @@ public class PlayActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         this.level = (Level) extras.getSerializable("level");
-        this.selected_kanjis = extras.getBooleanArray("selected_kanjis");
-        this.ctrlKanji = new CtrlKanji(this);
-        switch (level){
-            case N5:
-                this.kanjis = ctrlKanji.getSelectedN5Kanjis(this.selected_kanjis);
-                break;
-            case N4:
-                this.kanjis = ctrlKanji.getSelectedN4Kanjis(this.selected_kanjis);
-                break;
-            default:
-                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
+        this.selected_kanjis = extras.getIntegerArrayList("selected_kanjis");
+        this.ctrlKanji = new CtrlKanji(this, level);
+        this.kanjis = this.ctrlKanji.getSelectedKanjis(this.selected_kanjis);
         this.tv_meaning = (TextView) findViewById(R.id.tv_meaning);
         this.tv_onyomi = (TextView) findViewById(R.id.tv_onyomi);
         this.tv_onyomiKatakana = (TextView) findViewById(R.id.tv_onyomiKatakana);
@@ -74,6 +64,7 @@ public class PlayActivity extends AppCompatActivity {
         this.et_answer = (EditText) findViewById(R.id.et_answer);
         this.bt_start = (Button) findViewById(R.id.bt_start);
         this.bt_kanjiInfo = (ImageButton) findViewById(R.id.bt_kanjiInfo);
+        this.current_kanji_index = -1;
 
         this.et_answer.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -144,8 +135,12 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void showNewKanji(){
-        int index = (int)(Math.random() * kanjis.size());
-        current_kanji = kanjis.get(index);
+        int index;
+        do{
+            index = (int)(Math.random() * kanjis.size());
+        }while(kanjis.size() > 1 && index == current_kanji_index);
+        current_kanji_index = index;
+        current_kanji = kanjis.get(current_kanji_index);
         this.tv_meaning.setText(current_kanji.getMeaning());
         this.tv_onyomi.setText(current_kanji.getOnyomi());
         this.tv_onyomiKatakana.setText(current_kanji.getOnyomi_katakana());

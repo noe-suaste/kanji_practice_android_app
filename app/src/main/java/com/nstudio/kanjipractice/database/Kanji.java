@@ -1,31 +1,49 @@
 package com.nstudio.kanjipractice.database;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(primaryKeys = {"level", "id"})
+@Entity(tableName = "kanji", primaryKeys = {"level", "id"})
 public class Kanji implements Serializable {
 
     @NonNull
+    @ColumnInfo(name = "level")
     private int level;
+
     @NonNull
+    @ColumnInfo(name = "id")
     private int id;
+
     @NonNull
+    @ColumnInfo(name = "kanji")
     private String kanji;
+
     @NonNull
+    @ColumnInfo(name = "onyomi")
     private String onyomi;
+
     @NonNull
+    @ColumnInfo(name = "onyomi_katakana")
     private String onyomi_katakana;
+
     @NonNull
+    @ColumnInfo(name = "kunyomi")
     private String kunyomi;
+
     @NonNull
+    @ColumnInfo(name = "kunyomi_hiragana")
     private String kunyomi_hiragana;
+
     @NonNull
+    @ColumnInfo(name = "meaning")
     private String meaning;
+
     @NonNull
+    @ColumnInfo(name = "learned")
     private int learned;
 
     public Kanji(int level, int id, @NonNull String kanji, @NonNull String onyomi, @NonNull String onyomi_katakana, @NonNull String kunyomi, @NonNull String kunyomi_hiragana, @NonNull String meaning, int learned) {
@@ -110,7 +128,6 @@ public class Kanji implements Serializable {
         this.meaning = meaning;
     }
 
-    @NonNull
     public int getLearned() {
         return learned;
     }

@@ -20,10 +20,10 @@ public class GridAdapter extends BaseAdapter {
 
     private Context context;
     private List<Kanji> kanjis;
-    private boolean[] selected_kanjis;
+    private List<Integer> selected_kanjis;
     private LayoutInflater inflater;
 
-    public GridAdapter(Context context, List<Kanji> kanjis, boolean[] selected_kanjis) {
+    public GridAdapter(Context context, List<Kanji> kanjis, List<Integer> selected_kanjis) {
         this.context = context;
         this.kanjis = kanjis;
         this.selected_kanjis = selected_kanjis;
@@ -70,13 +70,16 @@ public class GridAdapter extends BaseAdapter {
         }
 
         // If this kanji is selected then the color changes
-        if(selected_kanjis[position]){
+        if(selected_kanjis.contains(position + 1)){
             tv_kanji.setBackgroundResource(R.color.gray);
             tv_learned.setBackgroundResource(R.color.gray);
             tv_id.setBackgroundResource(R.color.gray);
         }
-
-
         return convertView;
+    }
+
+    public void refresh(List<Kanji> kanjis){
+        this.kanjis = kanjis;
+        notifyDataSetChanged();
     }
 }
