@@ -123,6 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
+        android:enabled="false"
         android:onClick="start"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,4 +142,14 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_onKatakanaAndKunHiragana"
         app:srcCompat="@android:drawable/ic_menu_info_details"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/bt_selectKeyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectKeyboard"
+        android:text="Select Google Handwriting"
+        app:layout_constraintBottom_toTopOf="@+id/bt_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

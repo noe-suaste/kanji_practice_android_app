@@ -2,10 +2,15 @@ package com.nstudio.kanjipractice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +33,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchLevelActivity(View v){
-        Intent i = new Intent(this, LevelActivity.class);
+        String wantedKeyboard = "com.google.android.apps.handwriting";
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        List<InputMethodInfo> imi_list = imm.getEnabledInputMethodList();
+        boolean isActive = false;
+        for(InputMethodInfo imi : imi_list){
+            if(imi.getId().contains(wantedKeyboard))
+                isActive = true;
+        }
+        Intent i = null;
+        if(!isActive)
+            i = new Intent(this, KeyboardSelect.class);
+        else
+            i = new Intent(this, LevelActivity.class);
         startActivity(i);
     }
 }
