@@ -3,11 +3,14 @@ package com.nstudio.kanjipractice;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,13 +39,12 @@ public class PlayActivity extends AppCompatActivity {
     private TextView tv_kunyomiHiragana;
     private TextView tv_check;
     private EditText et_answer;
+    private Button bt_selectKeyboard;
     private Button bt_start;
     private ImageButton bt_kanjiInfo;
     private Kanji current_kanji;
     private int current_kanji_index;
 
-    public PlayActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class PlayActivity extends AppCompatActivity {
         this.tv_kunyomiHiragana = (TextView) findViewById(R.id.tv_kunyomiHiragana);
         this.tv_check = (TextView) findViewById(R.id.tv_check);
         this.et_answer = (EditText) findViewById(R.id.et_answer);
+        this.bt_selectKeyboard = (Button) findViewById(R.id.bt_selectKeyboard);
         this.bt_start = (Button) findViewById(R.id.bt_start);
         this.bt_kanjiInfo = (ImageButton) findViewById(R.id.bt_kanjiInfo);
         this.current_kanji_index = -1;
@@ -98,6 +101,7 @@ public class PlayActivity extends AppCompatActivity {
         this.bt_start.setEnabled(false);
         this.bt_start.setVisibility(View.GONE);
         this.et_answer.setEnabled(true);
+        this.et_answer.setHint("");
         this.bt_kanjiInfo.setVisibility(View.VISIBLE);
         showNewKanji();
     }
@@ -157,5 +161,48 @@ public class PlayActivity extends AppCompatActivity {
         Intent intent = new Intent(this, KanjiInfoActivity.class);
         intent.putExtra("kanji", current_kanji);
         startActivity(intent);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        if(hasFocus){
+            checkKeyboard();
+        }
+    }
+
+    private void checkKeyboard(){
+        if(!isKeyboardSelected()){
+            this.tv_meaning.setText("Meaning");
+            this.tv_onyomi.setText("Onyomi");
+            this.tv_onyomiKatakana.setText("Onyomi Katakana");
+            this.tv_kunyomi.setText("Kunyomi");
+            this.tv_kunyomiHiragana.setText("Kunyomi Hiragana");
+            this.et_answer.setEnabled(false);
+            this.et_answer.setHint("字");
+            this.bt_start.setVisibility(View.VISIBLE);
+            this.bt_start.setEnabled(false);
+            this.bt_selectKeyboard.setVisibility(View.VISIBLE);
+            this.bt_selectKeyboard.setEnabled(true);
+            this.bt_kanjiInfo.setVisibility(View.GONE);
+            this.current_kanji_index = -1;
+        }else{
+            if(this.current_kanji_index == -1){
+                this.bt_start.setEnabled(true);
+                this.bt_selectKeyboard.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private boolean isKeyboardSelected(){
+        final String defaultIME = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        if (TextUtils.isEmpty(defaultIME))
+            return false;
+        ComponentName defaultInputMethod = ComponentName.unflattenFromString(defaultIME);
+        return defaultIME.contains("com.google.android.apps.handwriting.ime");
+    }
+
+    public void selectKeyboard(View v){
+        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        imeManager.showInputMethodPicker();
     }
 }

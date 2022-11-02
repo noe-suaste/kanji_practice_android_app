@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nstudio.kanjipractice">
 
+    <queries>
+        <package android:name="com.google.android.apps.handwriting.ime"/>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KanjiPractice">
+        <activity
+            android:name=".KeyboardSelect"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".KanjiInfoActivity"
             android:exported="false" />
