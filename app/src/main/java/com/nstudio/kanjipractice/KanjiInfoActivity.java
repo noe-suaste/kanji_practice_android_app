@@ -86,7 +86,7 @@ public class KanjiInfoActivity extends AppCompatActivity {
             this.bt_markAsLearned.setText("Mark as not learned");
         }
         else{
-            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.black));
+            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.red));
             this.tv_status.setText("Not Learned");
             this.bt_markAsLearned.setText("Mark as learned");
         }
