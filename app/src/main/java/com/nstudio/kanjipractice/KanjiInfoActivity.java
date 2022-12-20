@@ -81,12 +81,12 @@ public class KanjiInfoActivity extends AppCompatActivity {
 
     public void updateView(){
         if(kanji.getLearned() == 1){
-            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.green));
+            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.orange));
             this.tv_status.setText("Learned");
             this.bt_markAsLearned.setText("Mark as not learned");
         }
         else{
-            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.red));
+            this.tv_status.setTextColor(ContextCompat.getColor(this, R.color.ligth_gray));
             this.tv_status.setText("Not Learned");
             this.bt_markAsLearned.setText("Mark as learned");
         }
