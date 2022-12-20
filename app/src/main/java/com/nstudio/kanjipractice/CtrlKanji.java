@@ -36,12 +36,28 @@ public class CtrlKanji {
         }
     }
 
+    public CtrlKanji(Context context){
+        this.database = AppDatabase.getDatabase(context);
+    }
+
     public List<Kanji> getKanjis(){
-        return database.daoKanji().getKanjisByLevel(this.level);
+        if(this.level != 0)
+            return database.daoKanji().getKanjisByLevel(this.level);
+        else
+            return database.daoKanji().getLearnedKanjis();
     }
 
     public List<Kanji> getSelectedKanjis(List<Integer> selected_kanjis){
-        return database.daoKanji().getSelectedKanjisByLevel(this.level, selected_kanjis);
+        if(this.level != 0)
+            return database.daoKanji().getSelectedKanjisByLevel(this.level, selected_kanjis);
+        else{
+            List<Kanji> learned_kanjis = database.daoKanji().getLearnedKanjis();
+            List<Kanji> selected_learned_kanjis = new ArrayList<Kanji>();
+            for(Integer i : selected_kanjis){
+                selected_learned_kanjis.add(learned_kanjis.get(i - 1));
+            }
+            return selected_learned_kanjis;
+        }
     }
 
     public List<Integer> getLearnedKanjis(){
@@ -50,5 +66,13 @@ public class CtrlKanji {
 
     public void setLearned(Integer learned, Integer id){
         database.daoKanji().setLearned(learned, this.level, id);
+    }
+
+    public Integer countLearnedByLevel(Integer level){
+        return database.daoKanji().countLearnedByLevel(level);
+    }
+
+    public Integer countLearned(){
+        return database.daoKanji().countLearned();
     }
 }

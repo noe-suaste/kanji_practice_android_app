@@ -1,6 +1,7 @@
 package com.nstudio.kanjipractice;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,14 @@ public class GridAdapter extends BaseAdapter {
     private Context context;
     private List<Kanji> kanjis;
     private List<Integer> selected_kanjis;
+    private Level level;
     private LayoutInflater inflater;
 
-    public GridAdapter(Context context, List<Kanji> kanjis, List<Integer> selected_kanjis) {
+    public GridAdapter(Context context, List<Kanji> kanjis, List<Integer> selected_kanjis, Level level) {
         this.context = context;
         this.kanjis = kanjis;
         this.selected_kanjis = selected_kanjis;
+        this.level = level;
     }
 
 
@@ -65,6 +68,10 @@ public class GridAdapter extends BaseAdapter {
         tv_kanji.setText(kanjis.get(position).getKanji());
         tv_id.setText(String.format(Locale.getDefault(),"%d", kanjis.get(position).getId()));
         tv_learned.setText("");
+        if(this.level == Level.LEARNED){
+            tv_learned.setHint("N" + String.format(Locale.getDefault(), "%d", kanjis.get(position).getLevel()) + " ");
+        }
+
 
         // If this kanji is selected then the color changes
         if(selected_kanjis.contains(position + 1)){
@@ -73,7 +80,7 @@ public class GridAdapter extends BaseAdapter {
             tv_id.setBackgroundResource(R.color.gray);
         }
 
-        if(kanjis.get(position).getLearned() == 1){
+        if(this.level != Level.LEARNED && kanjis.get(position).getLearned() == 1){
             //tv_learned.setBackgroundResource(R.color.orange);
             tv_learned.setText("●");
         }

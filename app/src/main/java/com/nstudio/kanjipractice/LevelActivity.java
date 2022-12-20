@@ -13,6 +13,8 @@ public class LevelActivity extends AppCompatActivity {
     private Button bt_levelN5;
     private Button bt_levelN4;
     private Button bt_levelN3;
+    private Button bt_levelLearned;
+    private CtrlKanji ctrlKanji;
 
     @Override
 
@@ -23,6 +25,13 @@ public class LevelActivity extends AppCompatActivity {
         this.bt_levelN5 = (Button) findViewById(R.id.bt_levelN5);
         this.bt_levelN4 = (Button) findViewById(R.id.bt_levelN4);
         this.bt_levelN3 = (Button) findViewById(R.id.bt_levelN3);
+        this.bt_levelLearned = (Button) findViewById(R.id.bt_levelLearned);
+        this.ctrlKanji = new CtrlKanji(this);
+
+        this.bt_levelN5.setText("N5 Kanji  (" + ctrlKanji.countLearnedByLevel(5).toString() + "/80)");
+        this.bt_levelN4.setText("N4 Kanji  (" + ctrlKanji.countLearnedByLevel(4).toString() + "/167)");
+        this.bt_levelN3.setText("N3 Kanji  (" + ctrlKanji.countLearnedByLevel(3).toString() + "/370)");
+        this.bt_levelLearned.setText("Learned Kanji  (" + ctrlKanji.countLearned().toString() + ")");
     }
 
     public void launchLevelVisualizerActivity(View v){
@@ -37,6 +46,9 @@ public class LevelActivity extends AppCompatActivity {
             case R.id.bt_levelN3:
                 level = Level.N3;
                 break;
+            case R.id.bt_levelLearned:
+                level = Level.LEARNED;
+                break;
             default:
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 break;
@@ -46,4 +58,12 @@ public class LevelActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        this.bt_levelN5.setText("N5 Kanji  (" + ctrlKanji.countLearnedByLevel(5).toString() + "/80)");
+        this.bt_levelN4.setText("N4 Kanji  (" + ctrlKanji.countLearnedByLevel(4).toString() + "/167)");
+        this.bt_levelN3.setText("N3 Kanji  (" + ctrlKanji.countLearnedByLevel(3).toString() + "/370)");
+        this.bt_levelLearned.setText("Learned Kanji  (" + ctrlKanji.countLearned().toString() + ")");
+    }
 }
