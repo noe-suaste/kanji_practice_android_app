@@ -47,4 +47,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_levelN4" />
+
+    <Button
+        android:id="@+id/bt_levelLearned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/orange"
+        android:onClick="launchLevelVisualizerActivity"
+        android:text="Learned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_levelN3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

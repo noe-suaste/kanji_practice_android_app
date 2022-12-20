@@ -26,4 +26,10 @@ public interface DaoKanji {
 
     @Query("UPDATE kanji SET learned = :learned WHERE level = :level AND id = :id")
     void setLearned(int learned, int level, int id);
+
+    @Query("SELECT SUM(learned) FROM kanji WHERE level = :level")
+    Integer countLearnedByLevel(int level);
+
+    @Query("SELECT SUM(learned) FROM kanji")
+    Integer countLearned();
 }

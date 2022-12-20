@@ -49,7 +49,7 @@ public class LevelVisualizerActivity extends AppCompatActivity {
         this.kanjis = this.ctrlKanji.getKanjis();
         this.selected_kanjis = new ArrayList<Integer>();
         this.gv_kanjisGrid = (GridView) findViewById(R.id.gv_kanjisGrid);
-        gridAdapter = new GridAdapter(LevelVisualizerActivity.this, kanjis, selected_kanjis);
+        gridAdapter = new GridAdapter(LevelVisualizerActivity.this, kanjis, selected_kanjis, level);
         gv_kanjisGrid.setAdapter(gridAdapter);
 
         gv_kanjisGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,6 +89,15 @@ public class LevelVisualizerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.level_visualizer_menu, menu);
+        if(this.level == Level.LEARNED){
+            MenuItem item = menu.findItem(R.id.action_setAsLearned);
+            item.setVisible(false);
+            item = menu.findItem(R.id.action_selectLearned);
+            item.setVisible(false);
+            item = menu.findItem(R.id.action_selectNotLearned);
+            item.setVisible(false);
+
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
