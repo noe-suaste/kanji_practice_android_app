@@ -65,9 +65,6 @@ public class GridAdapter extends BaseAdapter {
         tv_kanji.setText(kanjis.get(position).getKanji());
         tv_id.setText(String.format(Locale.getDefault(),"%d", kanjis.get(position).getId()));
         tv_learned.setText("");
-        if(kanjis.get(position).getLearned() == 1){
-            tv_learned.setText("✔");
-        }
 
         // If this kanji is selected then the color changes
         if(selected_kanjis.contains(position + 1)){
@@ -75,6 +72,13 @@ public class GridAdapter extends BaseAdapter {
             tv_learned.setBackgroundResource(R.color.gray);
             tv_id.setBackgroundResource(R.color.gray);
         }
+
+        if(kanjis.get(position).getLearned() == 1){
+            //tv_learned.setBackgroundResource(R.color.orange);
+            tv_learned.setText("●");
+        }
+
+
         return convertView;
     }
 

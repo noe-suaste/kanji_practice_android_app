@@ -55,20 +55,32 @@ public class LevelVisualizerActivity extends AppCompatActivity {
         gv_kanjisGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(selected_kanjis.contains(position + 1))
-                    selected_kanjis.remove(Integer.valueOf(position + 1));
-                else
-                    selected_kanjis.add(position + 1);
-                ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
+                // If it is in selection mode (there is at least one kanji selected)
+                if(!selected_kanjis.isEmpty()){
+                    if(selected_kanjis.contains(position + 1))
+                        selected_kanjis.remove(Integer.valueOf(position + 1));
+                    else
+                        selected_kanjis.add(position + 1);
+                    ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
+                }else{
+                    Intent intent = new Intent(self, KanjiInfoActivity.class);
+                    intent.putExtra("kanji", kanjis.get(position));
+                    startActivity(intent);
+                }
+
             }
         });
 
         gv_kanjisGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(self, KanjiInfoActivity.class);
+                if(selected_kanjis.isEmpty()){
+                    selected_kanjis.add(position + 1);
+                    ((GridAdapter) gv_kanjisGrid.getAdapter()).notifyDataSetChanged();
+                }
+                /*Intent intent = new Intent(self, KanjiInfoActivity.class);
                 intent.putExtra("kanji", kanjis.get(position));
-                startActivity(intent);
+                startActivity(intent);*/
                 return true;
             }
         });
